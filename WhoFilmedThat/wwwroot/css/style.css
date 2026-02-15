@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Lilita+One&display=swap');
+
+:root {
+    --bg: #07060e;
+    --surface: rgba(255,255,255,0.035);
+    --border: rgba(255,255,255,0.07);
+    --pink: #ff2d78;
+    --blue: #00d4ff;
+    --green: #00ff88;
+    --yellow: #ffe14d;
+    --purple: #b84dff;
+    --orange: #ff8a3d;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse at 15% 80%, rgba(255,45,120,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 20%, rgba(0,212,255,0.05) 0%, transparent 50%);
+    font-family: 'Outfit', sans-serif;
+    color: var(--text);
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100dvh;
+    padding: 20px;
+    gap: 18px;
+    animation: fadeUp 0.35s ease-out;
+}
+.screen.active { display: flex; }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.title {
+    font-family: 'Lilita One', cursive;
+    font-size: 2rem;
+    text-align: center;
+    text-shadow: 0 0 30px rgba(255,45,120,0.3), 0 0 60px rgba(0,212,255,0.15);
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: -8px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    width: 100%;
+    max-width: 420px;
+    backdrop-filter: blur(12px);
+}
+
+.btn {
+    border: none;
+    border-radius: 14px;
+    padding: 15px 28px;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    max-width: 360px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.15s ease;
+    color: #fff;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-pink { background: linear-gradient(135deg, var(--pink), #d12468); box-shadow: 0 0 24px rgba(255,45,120,0.2); }
+.btn-blue { background: linear-gradient(135deg, var(--blue), #00a8cc); box-shadow: 0 0 24px rgba(0,212,255,0.2); }
+.btn-green { background: linear-gradient(135deg, var(--green), #00cc6e); box-shadow: 0 0 24px rgba(0,255,136,0.2); color: #000; }
+.btn-purple { background: linear-gradient(135deg, var(--purple), #9333ea); box-shadow: 0 0 24px rgba(184,77,255,0.2); }
+.btn-orange { background: linear-gradient(135deg, var(--orange), #e0702a); box-shadow: 0 0 24px rgba(255,138,61,0.2); }
+.btn-outline { background: transparent; border: 2px solid var(--border); box-shadow: none; }
+
+input[type="text"], input[type="file"] {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: var(--text);
+    font-size: 1.1rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+}
+input:focus { border-color: var(--blue); }
+input::placeholder { color: #444; }
+
+.room-code {
+    font-family: 'Lilita One', cursive;
+    font-size: 3rem;
+    color: var(--yellow);
+    letter-spacing: 12px;
+    text-shadow: 0 0 20px rgba(255,225,77,0.3);
+}
+#joinCode {
+    font-size: 1.8rem;
+    letter-spacing: 8px;
+    color: var(--yellow);
+    max-width: 200px;
+    text-transform: uppercase;
+}
+
+/* Player bubbles */
+.player-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+}
+.player-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+.player-avatar {
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    border: 3px solid var(--blue);
+    overflow: hidden;
+    background: #1a1a2e;
+    box-shadow: 0 0 12px rgba(0,212,255,0.2);
+}
+.player-avatar.host { border-color: var(--yellow); box-shadow: 0 0 12px rgba(255,225,77,0.3); }
+.player-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.player-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #aaa;
+    max-width: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Camera circle */
+.camera-circle {
+    width: 170px; height: 170px;
+    border-radius: 50%;
+    border: 3px solid var(--pink);
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(255,45,120,0.2);
+    background: #111;
+}
+.camera-circle video, .camera-circle img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+/* Video frame */
+.video-frame {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 9/16;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 3px solid var(--purple);
+    box-shadow: 0 0 30px rgba(184,77,255,0.15);
+    background: #000;
+    position: relative;
+}
+.video-frame video {
+    width: 100%; height: 100%; object-fit: contain;
+    background: #000;
+}
+
+/* Vote grid */
+.vote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+}
+.vote-btn {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    color: var(--text);
+    font-family: 'Outfit'; font-weight: 700; font-size: 0.9rem;
+}
+.vote-btn:hover { border-color: var(--pink); background: rgba(255,45,120,0.08); }
+.vote-btn.selected { border-color: var(--pink); background: rgba(255,45,120,0.15); }
+.vote-btn .mini-avatar {
+    width: 38px; height: 38px; border-radius: 50%; overflow: hidden;
+    border: 2px solid #333; flex-shrink: 0;
+}
+.vote-btn .mini-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Upload list */
+.upload-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+.upload-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+}
+.upload-item .name { flex: 1; font-weight: 600; font-size: 0.9rem; }
+.upload-item .remove {
+    background: none; border: none; color: var(--pink);
+    cursor: pointer; font-size: 1.2rem; padding: 4px 8px;
+}
+
+/* Progress dots */
+.progress-dots {
+    display: flex; gap: 7px; justify-content: center;
+}
+.dot {
+    width: 10px; height: 10px; border-radius: 5px;
+    background: rgba(255,255,255,0.12); transition: all 0.3s;
+}
+.dot.done { background: var(--green); }
+.dot.current { background: var(--pink); width: 24px; }
+
+/* Leaderboard */
+.lb-entry {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+}
+.lb-rank { font-size: 1.6rem; width: 40px; text-align: center; }
+.lb-score {
+    font-family: 'Lilita One'; font-size: 1.8rem; margin-left: auto;
+}
+.lb-entry.first { border: 2px solid var(--yellow); box-shadow: 0 0 20px rgba(255,225,77,0.15); }
+
+/* Upload progress list */
+.progress-list { display: flex; flex-direction: column; gap: 12px; }
+.progress-row {
+    display: flex; align-items: center; gap: 12px;
+}
+.progress-row .status { font-size: 1.3rem; margin-left: auto; }
+
+/* Spinner */
+.spinner {
+    width: 22px; height: 22px;
+    border: 3px solid rgba(0,212,255,0.2);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+.rec-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--pink); color: #fff;
+    border-radius: 16px; padding: 5px 12px;
+    font-weight: 800; font-size: 0.85rem;
+    display: flex; align-items: center; gap: 6px;
+}
+.rec-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #fff; animation: pulse 1s infinite;
+}
+
+.timer-display {
+    font-weight: 700; font-size: 0.9rem;
+}
+.timer-display.urgent { color: var(--pink); }
+
+.error-toast {
+    background: rgba(255,45,120,0.12);
+    border: 1px solid var(--pink);
+    border-radius: 12px;
+    padding: 10px 18px;
+    color: var(--pink);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: center;
+    max-width: 400px;
+    animation: fadeUp 0.3s;
+}
+
+.back-btn {
+    align-self: flex-start;
+    background: none; border: none;
+    color: var(--blue); font-size: 1rem;
+    font-family: 'Outfit'; font-weight: 700;
+    cursor: pointer;
+}
+
+.emoji-big { font-size: 3.5rem; }
+
+.correct-banner { color: var(--green); }
+.wrong-banner { color: var(--pink); }
+
+.file-input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+}
+.file-input-wrapper input[type="file"] {
+    width: 100%;
+    padding: 14px;
+    cursor: pointer;
+}
+.file-input-wrapper input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, var(--purple), #9333ea);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-family: 'Outfit';
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.upload-counter {
+    font-family: 'Lilita One';
+    font-size: 1.5rem;
+    color: var(--blue);
+}

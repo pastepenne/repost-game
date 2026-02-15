@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Who Filmed That?</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- ERROR TOAST -->
+    <div id="errorToast" class="error-toast" style="display:none; position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:999;"></div>
+
+    <!-- ═══════════ HOME ═══════════ -->
+    <div id="homeScreen" class="screen active">
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;">
+            <div class="emoji-big">🎬</div>
+            <div class="title">WHO FILMED THAT?</div>
+            <p class="subtitle">Upload videos, then guess who filmed each one.<br>The best guesser wins!</p>
+            <div style="display:flex; flex-direction:column; gap:12px; width:100%; align-items:center; margin-top:16px;">
+                <button class="btn btn-pink" onclick="showScreen('setupScreen'); setupMode='create'">Create Room</button>
+                <button class="btn btn-blue" onclick="showScreen('setupScreen'); setupMode='join'">Join Room</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SETUP ═══════════ -->
+    <div id="setupScreen" class="screen">
+        <button class="back-btn" onclick="showScreen('homeScreen')">← Back</button>
+        <div id="setupTitle" class="title">CREATE ROOM</div>
+        <p class="subtitle" id="setupSub">Take a selfie and pick a name</p>
+
+        <div class="camera-circle">
+            <video id="selfieVideo" autoplay playsinline muted style="transform:scaleX(-1)"></video>
+            <img id="selfieImg" style="display:none">
+        </div>
+
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-pink" style="max-width:160px" id="takePhotoBtn" onclick="takePhoto()">📸 Take Photo</button>
+            <button class="btn btn-purple" style="max-width:160px; display:none" id="retakeBtn" onclick="retakePhoto()">🔄 Retake</button>
+        </div>
+
+        <input type="text" id="playerName" placeholder="Your name" maxlength="16">
+        <input type="text" id="joinCode" placeholder="CODE" maxlength="4" style="display:none">
+
+        <button class="btn btn-green" id="goBtn" onclick="submitSetup()" disabled>LET'S GO</button>
+    </div>
+
+    <!-- ═══════════ LOBBY ═══════════ -->
+    <div id="lobbyScreen" class="screen">
+        <div class="title">ROOM</div>
+        <div class="card" style="text-align:center; padding:14px 36px;">
+            <div class="room-code" id="lobbyCode">????</div>
+        </div>
+        <div class="card">
+            <p style="color:var(--muted); font-size:0.8rem; font-weight:700; text-align:center; margin-bottom:14px;">
+                <span id="playerCount">0</span> PLAYER(S) IN LOBBY
+            </p>
+            <div class="player-grid" id="lobbyPlayers"></div>
+        </div>
+        <p class="subtitle" id="lobbyHint">Waiting for the host to start...</p>
+        <button class="btn btn-green" id="startGameBtn" style="display:none" onclick="startGame()">🚀 Start Game</button>
+        <div id="lobbySpinner" style="display:flex; align-items:center; gap:8px;">
+            <div class="spinner"></div>
+            <span style="color:var(--muted); font-size:0.85rem;">Waiting for host...</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ UPLOAD ═══════════ -->
+    <div id="uploadScreen" class="screen">
+        <div class="title">UPLOAD VIDEOS</div>
+        <p class="subtitle">Pick videos from your gallery (up to 30, max 2 min each)</p>
+
+        <div class="upload-counter">
+            <span id="uploadCount">0</span> / 30 videos
+        </div>
+
+        <div class="file-input-wrapper">
+            <input type="file" id="videoFileInput" accept="video/*" multiple>
+        </div>
+
+        <div class="upload-list" id="myVideosList"></div>
+
+        <div id="uploadingIndicator" style="display:none; align-items:center; gap:8px;">
+            <div class="spinner"></div>
+            <span style="color:var(--blue); font-weight:700; font-size:0.9rem;">Uploading...</span>
+        </div>
+
+        <button class="btn btn-green" id="doneUploadingBtn" onclick="startPlaying()" style="display:none">
+            ✅ Everyone's Done — Start Playing
+        </button>
+
+        <div class="card" style="margin-top:8px;">
+            <p style="color:var(--muted); font-size:0.75rem; font-weight:700; text-align:center; margin-bottom:10px;">UPLOAD PROGRESS</p>
+            <div class="progress-list" id="uploadProgressList"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════ PLAYING ═══════════ -->
+    <div id="playingScreen" class="screen">
+        <div style="display:flex; justify-content:space-between; width:100%; max-width:420px; align-items:center;">
+            <span style="color:var(--yellow); font-weight:800; font-size:0.85rem;" id="videoCounter">VIDEO 1/1</span>
+            <span class="timer-display" id="voteTimer">⏱ 5:00</span>
+        </div>
+
+        <div class="progress-dots" id="progressDots"></div>
+
+        <div class="video-frame">
+            <video id="gameVideo" autoplay loop playsinline></video>
+        </div>
+
+        <div class="title" style="font-size:1.3rem; margin:4px 0;">Who filmed this? 🤔</div>
+
+        <div class="vote-grid" id="voteGrid"></div>
+
+        <p id="voteStatus" style="color:var(--muted); font-size:0.85rem; display:none;"></p>
+    </div>
+
+    <!-- ═══════════ REVEAL ═══════════ -->
+    <div id="revealScreen" class="screen">
+        <div class="progress-dots" id="revealDots"></div>
+        <div class="emoji-big" id="revealEmoji">🎉</div>
+        <div class="title" id="revealTitle">CORRECT!</div>
+        <p class="subtitle" id="revealSubtitle">You guessed it!</p>
+
+        <div class="card" style="text-align:center; padding:18px;">
+            <p style="color:var(--muted); font-size:0.8rem; font-weight:700; margin-bottom:10px;">THIS VIDEO WAS BY</p>
+            <div id="revealPlayer" style="display:flex; flex-direction:column; align-items:center; gap:6px;"></div>
+            <p style="color:var(--green); font-weight:800; margin-top:10px;" id="revealPoints">+1 point</p>
+        </div>
+
+        <div class="card">
+            <p style="color:var(--muted); font-size:0.75rem; font-weight:700; text-align:center; margin-bottom:10px;">SCORES SO FAR</p>
+            <div class="player-grid" id="revealScores"></div>
+        </div>
+
+        <button class="btn btn-blue" id="nextVideoBtn" style="display:none" onclick="nextVideo()">Next Video →</button>
+        <p id="revealWait" style="color:var(--muted); font-size:0.85rem;">Waiting for host to continue...</p>
+    </div>
+
+    <!-- ═══════════ LEADERBOARD ═══════════ -->
+    <div id="leaderboardScreen" class="screen">
+        <div class="emoji-big">🏆</div>
+        <div class="title">LEADERBOARD</div>
+        <p class="subtitle">Final results are in!</p>
+        <div id="leaderboardList" style="display:flex; flex-direction:column; gap:10px; width:100%; max-width:420px;"></div>
+        <button class="btn btn-pink" style="margin-top:18px;" onclick="location.reload()">🔄 Play Again</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="/js/game.js"></script>
+</body>
+</html>
