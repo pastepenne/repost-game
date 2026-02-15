@@ -1,13 +1,13 @@
-# 🎬 Who Filmed That?
+# 🎬 Who Reposted That?
 
-A multiplayer video guessing party game. Players upload videos from their gallery, then everyone tries to guess who filmed each one.
+A multiplayer repost guessing party game. Players upload their saved reposts, then everyone tries to guess whose repost it is.
 
 ## How to Play
 
 1. **Create a Room** — One person creates a room and gets a 4-letter code
 2. **Join** — Everyone else joins using the code (same WiFi network)
-3. **Upload Videos** — Each player picks up to 30 videos from their gallery (max 2 min each)
-4. **Guess** — Videos play one at a time in random order. Everyone votes on who they think filmed it
+3. **Upload Reposts** — Each player picks up to 30 reposts from their gallery (max 2 min each)
+4. **Guess** — Reposts play one at a time in random order. Everyone votes on whose repost it is
 5. **Score** — +1 point for each correct guess. After all videos, the leaderboard crowns the winner!
 
 ## Running the Game

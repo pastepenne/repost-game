@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Who Filmed That?</title>
+    <title>Who Reposted That?</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -15,8 +15,8 @@
     <div id="homeScreen" class="screen active">
         <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;">
             <div class="emoji-big">🎬</div>
-            <div class="title">WHO FILMED THAT?</div>
-            <p class="subtitle">Upload videos, then guess who filmed each one.<br>The best guesser wins!</p>
+            <div class="title">WHO REPOSTED THAT?</div>
+            <p class="subtitle">Upload reposts, then guess who reposted each one.<br>The best guesser wins!</p>
             <div style="display:flex; flex-direction:column; gap:12px; width:100%; align-items:center; margin-top:16px;">
                 <button class="btn btn-pink" onclick="showScreen('setupScreen'); setupMode='create'">Create Room</button>
                 <button class="btn btn-blue" onclick="showScreen('setupScreen'); setupMode='join'">Join Room</button>
@@ -68,8 +68,8 @@
 
     <!-- ═══════════ UPLOAD ═══════════ -->
     <div id="uploadScreen" class="screen">
-        <div class="title">UPLOAD VIDEOS</div>
-        <p class="subtitle">Pick videos from your gallery (up to 30, max 2 min each)</p>
+        <div class="title">UPLOAD REPOSTS</div>
+        <p class="subtitle">Pick reposts from your gallery (up to 30 videos, max 2 min each)</p>
 
         <div class="upload-counter">
             <span id="uploadCount">0</span> / 30 videos
@@ -87,7 +87,7 @@
         </div>
 
         <button class="btn btn-green" id="doneUploadingBtn" onclick="startPlaying()" style="display:none">
-            ✅ Everyone's Done — Start Playing
+            ✅ Everyone's Done — Start Guessing
         </button>
 
         <div class="card" style="margin-top:8px;">
@@ -109,7 +109,7 @@
             <video id="gameVideo" autoplay loop playsinline></video>
         </div>
 
-        <div class="title" style="font-size:1.3rem; margin:4px 0;">Who filmed this? 🤔</div>
+        <div class="title" style="font-size:1.3rem; margin:4px 0;">Who reposted this? 🤔</div>
 
         <div class="vote-grid" id="voteGrid"></div>
 

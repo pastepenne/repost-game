@@ -142,7 +142,7 @@ app.MapGet("/api/videos/{roomCode}/{playerId}", (
 });
 
 app.Logger.LogInformation("==============================================");
-app.Logger.LogInformation("  WHO FILMED THAT? is running on port 5000");
+app.Logger.LogInformation("  WHO REPOSTED THAT? is running on port 5000");
 app.Logger.LogInformation("  Players connect to http://<YOUR_IP>:5000");
 app.Logger.LogInformation("==============================================");
 
