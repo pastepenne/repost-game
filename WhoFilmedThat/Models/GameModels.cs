@@ -41,7 +41,7 @@ public class GameRoom
     // VideoId -> dict of PlayerId -> VotedForPlayerId
     public Dictionary<string, Dictionary<string, string>> Votes { get; set; } = new();
 
-    public readonly Lock Lock = new();
+    public readonly object Lock = new();
 }
 
 // DTOs sent to clients
